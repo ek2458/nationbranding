@@ -36,56 +36,52 @@
             <input type="text" class="form-control" id="country" placeholder="Country" name="country" value="{{country.country}}" required>
           </div>
           <div class="form-group col-md-4 col-sm-4">
+            <label for="flag">Flag URL</label>
+            <input type="text" class="form-control" id="flag" placeholder="Flag URL" name="flag" value="{{country.flag}}" required>
+          </div>
+          <div class="form-group col-md-4 col-sm-4">
             <label for="continent">Continent</label>
             <input type="text" class="form-control" id="continent" placeholder="Continent" name="continent" value="{{country.continent}}" required>
           </div>
-          <!-- <div class="form-group">
-            <label for="image">Image</label>
-            <input type="file" name="image" id="image" value="Select a Photo">
-          </div> -->
-          <div class="form-group col-md-4 col-sm-4">
-            <label for="flag">Flag</label>
-            <input type="text" class="form-control" id="flag" placeholder="URL" name="flag" value="{{country.flag}}" required>
-          </div>
           <div class="form-group col-md-4 col-sm-4">
             <label for="city">Capital City</label>
-            <input type="text" class="form-control" id="city" placeholder="Enter Capital City" name="city" value="{{country.city}}" required>
+            <input type="text" class="form-control" id="city" placeholder="Capital City" name="city" value="{{country.city}}" required>
           </div>
           <div class="form-group col-md-4 col-sm-4">
             <label for="lat">Latitude</label>
-            <input type="text" class="form-control" id="lat" placeholder="Enter Latitude" name="lat" value="{{country.lat}}">
+            <input type="text" class="form-control" id="lat" placeholder="Latitude" name="lat" value="{{country.lat}}" required>
           </div>
           <div class="form-group col-md-4 col-sm-4">
             <label for="lon">Longitude</label>
-            <input type="text" class="form-control" id="lon" placeholder="Enter Longitude" name="lon" value="{{country.lon}}">
+            <input type="text" class="form-control" id="lon" placeholder="Longitude" name="lon" value="{{country.lon}}" required>
           </div>
           <div class="form-group col-md-4 col-sm-4">
             <label for="popn">Population</label>
-            <input type="text" class="form-control" id="popn" placeholder="Enter Population" name="popn" value="{{country.popn}}" required>
+            <input type="text" class="form-control" id="popn" placeholder="Population" name="popn" value="{{country.popn}}" required>
           </div>
           <div class="form-group col-md-4 col-sm-4">
             <label for="currency">Currency</label>
-            <input type="text" class="form-control" id="currency" placeholder="Enter Currency" name="currency" value="{{country.currency}}" required>
+            <input type="text" class="form-control" id="currency" placeholder="Currency" name="currency" value="{{country.currency}}" required>
           </div>
           <div class="form-group col-md-4 col-sm-4">
-            <label for="language">Language</label>
-            <input type="text" class="form-control" id="language" placeholder="Enter Language" name="language" value="{{country.language}}" required>
+            <label for="language">language</label>
+            <input type="text" class="form-control" id="language" placeholder="language" name="language" value="{{country.language}}" required>
           </div>
           <div class="form-group col-md-4 col-sm-4">
             <label for="coatOfArm">Coat of Arm</label>
-            <input type="text" class="form-control" id="coatOfArm" placeholder="URL" name="coatOfArm" value="{{country.coatOfArm}}">
+            <input type="text" class="form-control" id="coatOfArm" placeholder="Coat of Arm" name="coatOfArm" value="{{country.coatOfArm}}" >
           </div>
           <div class="form-group col-md-4 col-sm-4">
             <label for="animal">Symbolic Animal</label>
-            <input type="text" class="form-control" id="animal" placeholder="Enter Animal" name="animal" value="{{country.animal}}">
+            <input type="text" class="form-control" id="animal" placeholder="Symbolic Animal" name="animal" value="{{country.animal}}" >
           </div>
           <div class="form-group col-md-4 col-sm-4">
-            <label for="plant">National Flower/Plant</label>
-            <input type="text" class="form-control" id="plant" placeholder="Enter plant" name="plant" value="{{country.plant}}">
+            <label for="plant">National Flower or Plant</label>
+            <input type="text" class="form-control" id="plant" placeholder="National Flower or Plant" name="plant" value="{{country.plant}}" >
           </div>
           <div class="form-group col-md-4 col-sm-4">
             <label for="motto">Motto</label>
-            <input type="text" class="form-control" id="motto" placeholder="Enter Motto" name="motto" value="{{country.motto}}">
+            <input type="text" class="form-control" id="motto" placeholder="Motto" name="motto" value="{{country.motto}}" >
           </div>
           <button type="submit" class="btn btn-default">Submit</button>
         </form>
@@ -106,17 +102,17 @@
 
     <script type="text/javascript">
       $("form").validate({
-          rules: {
-            // compound rule
-            // itpYear: {
-            //   required: true,
-            //   number: true
-            // },
-            // link: {
-            //   required: true,
-            //   url: true
-            // }
+        rules: {
+          // compound rule
+          flag: {
+            required: true,
+            url: true
+          },
+          coatOfArm: {
+            required: true,
+            url: true
           }
+        }
 
       });
     </script>

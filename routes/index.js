@@ -70,7 +70,7 @@ router.get('/edit/:slug', function(req,res){
 
   var requestedSlug = req.params.slug;
 
-  Country.findById(requestedSlug,function(err,data){
+  Country.findOne({slug: requestedSlug},function(err,data){
     if(err){
       var error = {
         status: "ERROR",
@@ -96,7 +96,7 @@ router.get('/edit/:slug', function(req,res){
 
 router.get('/edit/:id', function(req,res){
 
-  var requestedId = req.params.id;
+  var requestedSlug = req.params.id;
 
   Country.findById(requestedId,function(err,data){
     if(err){
@@ -227,7 +227,7 @@ router.post('/api/edit/:slug', function(req,res){
 
   console.log(countryObj);
 
-  Country.findByIdAndUpdate(requestedId,countryObj,function(err,data){
+  Country.findOneAndUpdate(requestedSlug,countryObj,function(err,data){
     if(err){
       var error = {
         status: "ERROR",
@@ -394,7 +394,7 @@ router.get('/api/get', function(req,res){
 
       var jsonData = {
         status: "OK",
-        people: data
+        country: data
       }
 
       return res.json(jsonData);
@@ -420,7 +420,7 @@ router.get('/api/get/continent/:continent',function(req,res){
 
       var jsonData = {
         status: "OK",
-        people: data
+        country: data
       }
 
       return res.json(jsonData);
