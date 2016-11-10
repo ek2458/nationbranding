@@ -18,6 +18,7 @@ var countrySchema = new Schema({
 	currency: String,
 	language: [String],
 	symbol: {
+		coatOfArm: String,
 		animal: [String],
 		plant: String,
 		motto: String,

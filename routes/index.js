@@ -114,6 +114,7 @@ router.post('/api/create', function(req, res){
       popn: req.body.popn.replace(/,/g , ""),
       currency: req.body.currency,
       language: req.body.language.split(','),
+      coatOfArm: req.body.coatOfArm,
       animal: req.body.animal.split(','), // split string into array
       plant: req.body.plant,
       motto: req.body.motto,
@@ -179,6 +180,7 @@ router.post('/api/edit/:slug', function(req,res){
     popn: req.body.popn,
     currency: req.body.currency,
     language: req.body.language.split(','),
+    coatOfArm: req.body.coatOfArm,
     animal: req.body.animal.split(','), // split string into array
     plant: req.body.plant,
     motto: req.body.motto,
@@ -224,6 +226,7 @@ router.post('/api/create/image', multipartMiddleware, function(req,res){
     popn: parseInt(req.body.popn),
     currency: req.body.currency,
     language: req.body.language.split(','),
+    coatOfArm: req.body.coatOfArm,
     animal: req.body.animal.split(','), // split string into array
     plant: req.body.plant,
     motto: req.body.motto,
