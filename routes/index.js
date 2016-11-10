@@ -111,7 +111,7 @@ router.post('/api/create', function(req, res){
       city: req.body.city,
       lat: req.body.lat,
       lon: req.body.lon,
-      popn: req.body.popn.replace(/,/g , "");,
+      popn: req.body.popn.replace(/,/g , ""),
       currency: req.body.currency,
       language: req.body.language.split(','),
       animal: req.body.animal.split(','), // split string into array
