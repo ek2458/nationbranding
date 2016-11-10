@@ -14,7 +14,7 @@ var countrySchema = new Schema({
 		lat: String,
 		lon: String
 	},
-	popn: Number,
+	popn: String,
 	currency: String,
 	language: [String],
 	symbol: {
