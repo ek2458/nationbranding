@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-// our db model
+// our db models
 var Country = require("../models/country.js");
+// var Course = require("../models/course.js");
 
 // S3 File dependencies
 var AWS = require('aws-sdk');
@@ -31,31 +32,45 @@ router.get('/', function(req, res) {
   console.log('home page requested!');
 
   var jsonData = {
-  	name: 'class-directory',
-  	status:'OK'
+  	'name': 'itp-directory',
+  	'api-status':'OK'
   }
 
   // respond with json data
-  res.render('index.html');
+  //res.json(jsonData)
+
+  // respond by redirecting
+  //res.redirect('/directory')
+
+  // respond with html
+  res.render('directory.html')
+
 });
 
 router.get('/add-country', function(req,res){
 
-  res.render('add.html');
+  res.render('add.html')
+
+})
+
+router.get('/add-country-with-image', function(req,res){
+
+  res.render('add-with-image.html')
 
 })
 
 router.get('/directory', function(req,res){
 
-  res.render('directory.html');
+  res.render('directory.html')
 
 })
+
 
 router.get('/edit/:slug', function(req,res){
 
   var requestedSlug = req.params.slug;
 
-  Country.findOne({slug: requestedSlug},function(err,data){
+  Country.findById(requestedSlug,function(err,data){
     if(err){
       var error = {
         status: "ERROR",
@@ -76,6 +91,8 @@ router.get('/edit/:slug', function(req,res){
   })
 
 })
+
+
 
 router.get('/edit/:id', function(req,res){
 
@@ -100,67 +117,67 @@ router.get('/edit/:id', function(req,res){
 
 })
 
-router.post('/api/create', function(req, res){
+//pull information form the req.bodycountry: req.body.country,
 
-    console.log(req.body);
+router.post('/api/create', function(req,res){
 
-    var countryObj = {
-      country: req.body.country,
-      continent: req.body.continent,
-      flag: req.body.flag,
-      city: req.body.city,
-      lat: req.body.lat,
-      lon: req.body.lon,
-      popn: req.body.popn,
-      currency: req.body.currency,
-      language: req.body.language.split(','),
-      coatOfArm: req.body.coatOfArm,
-      animal: req.body.animal.split(','), // split string into array
-      plant: req.body.plant,
-      motto: req.body.motto,
-      slug: req.body.country.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_')
+  console.log(req.body);
+
+  var country = req.body.country;
+  var continent = req.body.continent;
+  var flag = req.body.flag;
+  var city = req.body.city;
+  var lat = req.body.lat;
+  var lon = req.body.lon;
+  var popn = req.body.popn.replace(/,/g,'');
+  var currency = req.body.currency;
+  var language = req.body.language.split(',');
+  var coatOfArm = req.body.coatOfArm;
+  var animal = req.body.animal.split(',');
+  var plant = req.body.plant;
+  var motto = req.body.motto;
+  var slug = req.body.country.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
+
+
+  var countryObj = {
+    country: country,
+    continent: continent,
+    flag: flag,
+    capitalCity: {
+      city: city,
+      lat: lat,
+      lon: lon
+    },
+    popn: popn,
+    currency: currency,
+    language: language,
+    symbol: {
+      coatOfArm: coatOfArm,
+      animal: animal,
+      plant: plant,
+      motto: motto
+    },
+    slug: slug
+  }
+
+  var country = new Country(countryObj);
+
+  country.save(function(err,data){
+    if(err){
+      var error = {
+        status: "ERROR",
+        message: err
+      }
+      return res.json(err)
     }
 
-    var country = new Country(countryObj);
-
-    country.save(function(err,data){
-      if (err){
-        var error = {
-          status:'ERROR',
-          message: 'Error saving country'
-        };
-        return res.json(error);
-      }
-
-      var jsonData = {
-        status: 'OK',
-        country: data
-      }
-
-      return res.json(jsonData);
-      // res.render('directory.html');
-
-    })
-
-});
-
-router.get('api/country/:slug', function(req,res){
-  var reqestedSlug = req.params.slug;
-
-  console.log(reqestedSlug);
-  Country.findOne({slug:requestedSlug}, function(err,data){
-    if(!data || data==null || data==""){
-      var error={
-        status: 'error',
-        message: "we could not find that country"
-      }
-
-      res.json({status:'error', message:'could not find that country'});
+    var jsonData = {
+      status: "OK",
+      country: data
     }
-    console.log('found that country -->');
-    console.log(data);
 
-    res.json(data);
+    return res.json(jsonData);
+
   })
 
 })
@@ -170,26 +187,47 @@ router.post('/api/edit/:slug', function(req,res){
   console.log(req.body);
   var requestedSlug = req.params.slug;
 
+  var country = req.body.country;
+  var continent = req.body.continent;
+  var flag = req.body.flag;
+  var city = req.body.city;
+  var lat = req.body.lat;
+  var lon = req.body.lon;
+  var popn = req.body.popn.replace(/,/g,'');
+  var currency = req.body.currency;
+  var language = req.body.language.split(',');
+  var coatOfArm = req.body.coatOfArm;
+  var animal = req.body.animal.split(',');
+  var plant = req.body.plant;
+  var motto = req.body.motto;
+  var slug = req.body.country.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
+
+
+
   var countryObj = {
-    country: req.body.country,
-    continent: req.body.continent,
-    flag: req.body.flag,
-    city: req.body.city,
-    lat: req.body.lat,
-    lon: req.body.lon,
-    popn: req.body.popn,
-    currency: req.body.currency,
-    language: req.body.language.split(','),
-    coatOfArm: req.body.coatOfArm,
-    animal: req.body.animal.split(','), // split string into array
-    plant: req.body.plant,
-    motto: req.body.motto,
-    slug: req.body.country.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_')
+    country: country,
+    continent: continent,
+    flag: flag,
+    capitalCity: {
+      city: city,
+      lat: lat,
+      lon: lon
+    },
+    popn: popn,
+    currency: currency,
+    language: language,
+    symbol: {
+      coatOfArm: coatOfArm,
+      animal: animal,
+      plant: plant,
+      motto: motto
+    },
+    slug: slug
   }
 
   console.log(countryObj);
 
-  Country.findOneAndUpdate({slug: requestedSlug},countryObj,function(err,data){
+  Country.findByIdAndUpdate(requestedId,countryObj,function(err,data){
     if(err){
       var error = {
         status: "ERROR",
@@ -216,21 +254,41 @@ router.post('/api/create/image', multipartMiddleware, function(req,res){
   console.log('the incoming data >> ' + JSON.stringify(req.body));
   console.log('the incoming image file >> ' + JSON.stringify(req.files.image));
 
+  var country = req.body.country;
+  var continent = req.body.continent;
+  var flag = req.body.flag;
+  var city = req.body.city;
+  var lat = req.body.lat;
+  var lon = req.body.lon;
+  var popn = req.body.popn.replace(/,/g,'');
+  var currency = req.body.currency;
+  var language = req.body.language.split(',');
+  var coatOfArm = req.body.coatOfArm;
+  var animal = req.body.animal.split(',');
+  var plant = req.body.plant;
+  var motto = req.body.motto;
+  var slug = req.body.country.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
+
+
   var countryObj = {
-    country: req.body.country,
-    continent: req.body.continent,
-    flag: req.body.flag,
-    city: req.body.city,
-    lat: req.body.lat,
-    lon: req.body.lon,
-    popn: parseInt(req.body.popn),
-    currency: req.body.currency,
-    language: req.body.language.split(','),
-    coatOfArm: req.body.coatOfArm,
-    animal: req.body.animal.split(','), // split string into array
-    plant: req.body.plant,
-    motto: req.body.motto,
-    slug: req.body.country.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_')
+    country: country,
+    continent: continent,
+    flag: flag,
+    capitalCity: {
+      city: city,
+      lat: lat,
+      lon: lon
+    },
+    popn: popn,
+    currency: currency,
+    language: language,
+    symbol: {
+      coatOfArm: coatOfArm,
+      animal: animal,
+      plant: plant,
+      motto: motto
+    },
+    slug: slug
   }
 
 
@@ -336,7 +394,7 @@ router.get('/api/get', function(req,res){
 
       var jsonData = {
         status: "OK",
-        countryObj: data
+        people: data
       }
 
       return res.json(jsonData);
@@ -345,7 +403,7 @@ router.get('/api/get', function(req,res){
 
 })
 
-router.get('/api/get/:continent',function(req,res){
+router.get('/api/get/continent/:continent',function(req,res){
 
   var requestedContinent = req.params.continent;
 
@@ -362,7 +420,7 @@ router.get('/api/get/:continent',function(req,res){
 
       var jsonData = {
         status: "OK",
-        country: data
+        people: data
       }
 
       return res.json(jsonData);
@@ -370,25 +428,31 @@ router.get('/api/get/:continent',function(req,res){
 
 })
 
-// year, name
-// /api/get/query?year=2016&name=Sam&hasGlasses=true
-
+// example query --> /api/get/query?continent=2016&country=korea
+// --> continent=asia
+// --> country=korea
 router.get('/api/get/query',function(req,res){
 
   console.log(req.query);
 
+  // start with an empty searchQuery object
   var searchQuery = {};
 
-  if(req.query.language){
-    searchQuery['language'] =  req.query.language
-  }
-
+  // if continent is in the query, add it to the searchQuery object
   if(req.query.continent){
     searchQuery['continent'] =  req.query.continent
   }
+  // in the above example, searchQuery is now --> { continent: asia }
 
-  if(req.query.plant){
-    searchQuery['plant'] =  req.query.plant
+  // if country is in the query, add it to the searchQuery object
+  if(req.query.country){
+    searchQuery['country'] =  req.query.country
+  }
+  // in the above example, searchQuery is now { continent: aisa, country: Sam}
+
+  // if language is in the query, add it to the example
+  if(req.query.language){
+    searchQuery['language'] =  req.query.language
   }
 
   Country.find(searchQuery,function(err,data){
@@ -398,7 +462,6 @@ router.get('/api/get/query',function(req,res){
   // Country.find(searchQuery).sort('-name').exec(function(err,data){
   //   res.json(data);
   // })
-
 
 })
 

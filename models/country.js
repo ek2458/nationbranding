@@ -23,6 +23,7 @@ var countrySchema = new Schema({
 		plant: String,
 		motto: String,
 	},
+	slug: String,
 	dateAdded : { type: Date, default: Date.now },
 })
 

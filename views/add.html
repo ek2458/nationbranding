@@ -10,8 +10,7 @@
     <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet' type='text/css'>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap_css/bootstrap.css">
-    <link rel="stylesheet" href="css/bootstrap_css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
     <!-- Custom CSS inside CSS folder -->
     <link rel="stylesheet" href="css/style.css">
@@ -29,64 +28,60 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
-        <h1>Let's add a Country</h1>
-        <form method="post" action="/api/create" id="myForm" enctype="multipart/form-data">
-          <div class="form-group col-md-4 col-sm-4">
+      <div class="col-md-8">
+        <h1>Let's add an ITP Person</h1>
+        <form method="post" action="/api/create" id="myForm">
+          <div class="form-group">
             <label for="country">Country</label>
-            <input type="text" class="form-control" id="country" placeholder="Country" name="country" required>
+            <input type="text" class="form-control" id="country" placeholder="country" name="country" required>
           </div>
-          <div class="form-group col-md-4 col-sm-4">
-            <label for="continent">Continent</label>
-            <input type="text" class="form-control" id="continent" placeholder="Continent" name="continent" required>
+          <div class="form-group">
+            <label for="flag">flag</label>
+            <input type="text" class="form-control" id="flag" placeholder="flag" name="flag" required>
           </div>
-          <!-- <div class="form-group">
-            <label for="image">Image</label>
-            <input type="file" name="image" id="image" value="Select a Photo">
-          </div> -->
-          <div class="form-group col-md-4 col-sm-4">
-            <label for="flag">Flag</label>
-            <input type="text" class="form-control" id="flag" placeholder="URL" name="flag" required>
+          <div class="form-group">
+            <label for="continent">continent</label>
+            <input type="text" class="form-control" id="continent" placeholder="continent" name="continent" required>
           </div>
-          <div class="form-group col-md-4 col-sm-4">
-            <label for="city">Capital City</label>
-            <input type="text" class="form-control" id="city" placeholder="Enter Capital City" name="city" required>
+          <div class="form-group">
+            <label for="city">city</label>
+            <input type="text" class="form-control" id="city" placeholder="city" name="city" required>
           </div>
-          <div class="form-group col-md-4 col-sm-4">
-            <label for="lat">Latitude</label>
-            <input type="text" class="form-control" id="lat" placeholder="Enter Latitude" name="lat" required>
+          <div class="form-group">
+            <label for="lat">lat</label>
+            <input type="text" class="form-control" id="lat" placeholder="lat" name="lat" required>
           </div>
-          <div class="form-group col-md-4 col-sm-4">
-            <label for="lon">Longitude</label>
-            <input type="text" class="form-control" id="lon" placeholder="Enter Longitude" name="lon" required>
+          <div class="form-group">
+            <label for="lon">lon</label>
+            <input type="text" class="form-control" id="lon" placeholder="lon" name="lon" required>
           </div>
-          <div class="form-group col-md-4 col-sm-4">
-            <label for="popn">Population</label>
-            <input type="text" class="form-control" id="popn" placeholder="Enter Population" name="popn" required>
+          <div class="form-group">
+            <label for="popn">popn</label>
+            <input type="text" class="form-control" id="popn" placeholder="popn" name="popn" required>
           </div>
-          <div class="form-group col-md-4 col-sm-4">
-            <label for="currency">Currency</label>
-            <input type="text" class="form-control" id="currency" placeholder="Enter Currency" name="currency" required>
+          <div class="form-group">
+            <label for="currency">currency</label>
+            <input type="text" class="form-control" id="currency" placeholder="currency" name="currency" required>
           </div>
-          <div class="form-group col-md-4 col-sm-4">
-            <label for="language">Language</label>
-            <input type="text" class="form-control" id="language" placeholder="Enter Language" name="language" required>
+          <div class="form-group">
+            <label for="language">language</label>
+            <input type="text" class="form-control" id="language" placeholder="language" name="language" required>
           </div>
-          <div class="form-group col-md-4 col-sm-4">
-            <label for="coatOfArm">Coat of Arm</label>
-            <input type="text" class="form-control" id="coatOfArm" placeholder="URL" name="coatOfArm">
+          <div class="form-group">
+            <label for="coatOfArm">coatOfArm</label>
+            <input type="text" class="form-control" id="coatOfArm" placeholder="coatOfArm" name="coatOfArm" required>
           </div>
-          <div class="form-group col-md-4 col-sm-4">
-            <label for="animal">Symbolic Animal</label>
-            <input type="text" class="form-control" id="animal" placeholder="Enter Animal" name="animal">
+          <div class="form-group">
+            <label for="animal">animal</label>
+            <input type="text" class="form-control" id="animal" placeholder="animal" name="animal" required>
           </div>
-          <div class="form-group col-md-4 col-sm-4">
-            <label for="plant">National Flower/Plant</label>
-            <input type="text" class="form-control" id="plant" placeholder="Enter plant" name="plant">
+          <div class="form-group">
+            <label for="plant">plant</label>
+            <input type="text" class="form-control" id="plant" placeholder="plant" name="plant" required>
           </div>
-          <div class="form-group col-md-4 col-sm-4">
-            <label for="motto">Motto</label>
-            <input type="text" class="form-control" id="motto" placeholder="Enter Motto" name="motto">
+          <div class="form-group">
+            <label for="motto">motto</label>
+            <input type="text" class="form-control" id="motto" placeholder="motto" name="motto" required>
           </div>
           <button type="submit" class="btn btn-default">Submit</button>
         </form>
@@ -100,20 +95,20 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
     <!-- JQuery validate -->
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
 
     <script type="text/javascript">
       $("#myForm").validate({
           rules: {
             // compound rule
-            // itpYear: {
-            //   required: true,
-            //   number: true
-            // },
-            // link: {
-            //   required: true,
-            //   url: true
-            // }
+            flag: {
+              required: true,
+              // url: true
+            },
+            coatOfArm: {
+              required: true,
+              // url: true
+            }
           }
 
       });
