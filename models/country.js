@@ -10,9 +10,8 @@ var countrySchema = new Schema({
 	continent: String,
 	flag: String,
 	capitalCity: {
-		city: String,
-		lat: String,
-		lon: String
+		geo: { type: [Number], index: { type: '2dsphere', sparse: true } },
+		city: String
 	},
 	popn: String,
 	currency: String,

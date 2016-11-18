@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+var geocoder = require('geocoder'); // geocoder library
 
 // our db models
 var Country = require("../models/country.js");
@@ -126,9 +127,7 @@ router.post('/api/create', function(req,res){
   var country = req.body.country;
   var continent = req.body.continent;
   var flag = req.body.flag;
-  var city = req.body.city;
-  var lat = req.body.lat;
-  var lon = req.body.lon;
+  var capitalCity = req.body.capitalCity;
   var popn = req.body.popn.replace(/,/g,'');
   var currency = req.body.currency;
   var language = req.body.language.split(',');
@@ -143,11 +142,6 @@ router.post('/api/create', function(req,res){
     country: country,
     continent: continent,
     flag: flag,
-    capitalCity: {
-      city: city,
-      lat: lat,
-      lon: lon
-    },
     popn: popn,
     currency: currency,
     language: language,
@@ -160,26 +154,49 @@ router.post('/api/create', function(req,res){
     slug: slug
   }
 
-  var country = new Country(countryObj);
+  // if there is no capitalCity, return an error
+  if(!capitalCity) return res.json({status:'ERROR', message: 'You are missing a required field or have submitted a malformed request.'})
 
-  country.save(function(err,data){
-    if(err){
-      var error = {
-        status: "ERROR",
-        message: err
+  // now, let's geocode the capitalCity
+  geocoder.geocode(capitalCity, function (err,data) {
+
+
+    // if we get an error, or don't have any results, respond back with error
+    if (!data || data==null || err || data.status == 'ZERO_RESULTS'){
+      var error = {status:'ERROR', message: 'Error finding capital city'};
+      return res.json({status:'ERROR', message: 'You are missing a required field or have submitted a malformed request.'})
+    }
+
+    // else, let's pull put the lat lon from the results
+    var lon = data.results[0].geometry.location.lng;
+    var lat = data.results[0].geometry.location.lat;
+
+    // now, let's add this to our animal object from above
+    countryObj.capitalCity = {
+      geo: [lon,lat], // need to put the geo co-ordinates in a lng-lat array for saving
+      city: data.results[0].formatted_address // the capitalCity
+    }
+
+    var country = new Country(countryObj);
+
+    country.save(function(err,data){
+      if(err){
+        var error = {
+          status: "ERROR",
+          message: err
+        }
+        return res.json(err)
       }
-      return res.json(err)
-    }
 
-    var jsonData = {
-      status: "OK",
-      country: data
-    }
+      var jsonData = {
+        status: "OK",
+        country: data
+      }
 
-    return res.json(jsonData);
+      return res.redirect('/directory');
 
-  })
-
+    })
+  });
 })
 
 router.post('/api/edit/:slug', function(req,res){
@@ -190,9 +207,7 @@ router.post('/api/edit/:slug', function(req,res){
   var country = req.body.country;
   var continent = req.body.continent;
   var flag = req.body.flag;
-  var city = req.body.city;
-  var lat = req.body.lat;
-  var lon = req.body.lon;
+  var capitalCity = req.body.capitalCity;
   var popn = req.body.popn.replace(/,/g,'');
   var currency = req.body.currency;
   var language = req.body.language.split(',');
@@ -202,17 +217,10 @@ router.post('/api/edit/:slug', function(req,res){
   var motto = req.body.motto;
   var slug = req.body.country.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
 
-
-
   var countryObj = {
     country: country,
     continent: continent,
     flag: flag,
-    capitalCity: {
-      city: city,
-      lat: lat,
-      lon: lon
-    },
     popn: popn,
     currency: currency,
     language: language,
@@ -225,29 +233,52 @@ router.post('/api/edit/:slug', function(req,res){
     slug: slug
   }
 
-  console.log(countryObj);
+  // if there is no capitalCity, return an error
+  if(!capitalCity) return res.json({status:'ERROR', message: 'You are missing a required field or have submitted a malformed request.'})
 
-  Country.findOneAndUpdate(requestedSlug,countryObj,function(err,data){
-    if(err){
-      var error = {
-        status: "ERROR",
-        message: err
+  // now, let's geocode the capitalCity
+  geocoder.geocode(capitalCity, function (err,data) {
+
+
+    // if we get an error, or don't have any results, respond back with error
+    if (!data || data==null || err || data.status == 'ZERO_RESULTS'){
+      var error = {status:'ERROR', message: 'Error finding capital city'};
+      return res.json({status:'ERROR', message: 'You are missing a required field or have submitted a malformed request.'})
+    }
+
+    // else, let's pull put the lat lon from the results
+    var lon = data.results[0].geometry.location.lng;
+    var lat = data.results[0].geometry.location.lat;
+
+    // now, let's add this to our animal object from above
+    countryObj.capitalCity = {
+      geo: [lon,lat], // need to put the geo co-ordinates in a lng-lat array for saving
+      city: data.results[0].formatted_address // the capitalCity
+    }
+
+    console.log(countryObj);
+
+    Country.findOneAndUpdate(requestedSlug,countryObj,function(err,data){
+      if(err){
+        var error = {
+          status: "ERROR",
+          message: err
+        }
+        return res.json(error)
       }
-      return res.json(error)
-    }
 
-    var jsonData = {
-      status: "OK",
-      country: data
-    }
+      var jsonData = {
+        status: "OK",
+        country: data
+      }
 
-    //return res.json(jsonData);
+      //return res.json(jsonData);
 
-    return res.redirect('/directory');
+      return res.redirect('/directory');
 
-  })
-
-})
+    })
+  });
+});
 
 router.post('/api/create/image', multipartMiddleware, function(req,res){
 
@@ -257,9 +288,7 @@ router.post('/api/create/image', multipartMiddleware, function(req,res){
   var country = req.body.country;
   var continent = req.body.continent;
   var flag = req.body.flag;
-  var city = req.body.city;
-  var lat = req.body.lat;
-  var lon = req.body.lon;
+  var capitalCity = req.body.capitalCity;
   var popn = req.body.popn.replace(/,/g,'');
   var currency = req.body.currency;
   var language = req.body.language.split(',');
@@ -269,16 +298,10 @@ router.post('/api/create/image', multipartMiddleware, function(req,res){
   var motto = req.body.motto;
   var slug = req.body.country.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
 
-
   var countryObj = {
     country: country,
     continent: continent,
     flag: flag,
-    capitalCity: {
-      city: city,
-      lat: lat,
-      lon: lon
-    },
     popn: popn,
     currency: currency,
     language: language,
@@ -290,6 +313,30 @@ router.post('/api/create/image', multipartMiddleware, function(req,res){
     },
     slug: slug
   }
+
+  // if there is no capitalCity, return an error
+  if(!capitalCity) return res.json({status:'ERROR', message: 'You are missing a required field or have submitted a malformed request.'})
+
+  // now, let's geocode the capitalCity
+  geocoder.geocode(capitalCity, function (err,data) {
+
+
+    // if we get an error, or don't have any results, respond back with error
+    if (!data || data==null || err || data.status == 'ZERO_RESULTS'){
+      var error = {status:'ERROR', message: 'Error finding capital city'};
+      return res.json({status:'ERROR', message: 'You are missing a required field or have submitted a malformed request.'})
+    }
+
+    // else, let's pull put the lat lon from the results
+    var lon = data.results[0].geometry.location.lng;
+    var lat = data.results[0].geometry.location.lat;
+
+    // now, let's add this to our animal object from above
+    countryObj.capitalCity = {
+      geo: [lon,lat], // need to put the geo co-ordinates in a lng-lat array for saving
+      city: data.results[0].formatted_address // the capitalCity
+    }
+  })
 
 
   // NOW, we need to deal with the image

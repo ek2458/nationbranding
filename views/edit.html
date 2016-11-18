@@ -44,16 +44,8 @@
             <input type="text" class="form-control" id="continent" placeholder="Continent" name="continent" value="{{country.continent}}" required>
           </div>
           <div class="form-group col-md-4 col-sm-4">
-            <label for="city">Capital City</label>
-            <input type="text" class="form-control" id="city" placeholder="Capital City" name="city" value="{{country.city}}" required>
-          </div>
-          <div class="form-group col-md-4 col-sm-4">
-            <label for="lat">Latitude</label>
-            <input type="text" class="form-control" id="lat" placeholder="Latitude" name="lat" value="{{country.lat}}" required>
-          </div>
-          <div class="form-group col-md-4 col-sm-4">
-            <label for="lon">Longitude</label>
-            <input type="text" class="form-control" id="lon" placeholder="Longitude" name="lon" value="{{country.lon}}" required>
+            <label for="capitalCity">Capital City</label>
+            <input type="text" class="form-control" id="capitalCity" placeholder="Enter Capital City" name="capitalCity" required>
           </div>
           <div class="form-group col-md-4 col-sm-4">
             <label for="popn">Population</label>
@@ -105,11 +97,11 @@
         rules: {
           // compound rule
           flag: {
-            required: true,
+            // required: true,
             url: true
           },
           coatOfArm: {
-            required: true,
+            // required: true,
             url: true
           }
         }

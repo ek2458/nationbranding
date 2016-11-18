@@ -19,9 +19,7 @@ function renderPeeps(){
 					'<h1>'+country[i].country+'</h1>'+
 					'<ul>'+
 						'<li>Continent: <b>'+country[i].continent+'</b></li>'+
-            '<li>Capital City: <b>'+country[i].city+'</b></li>'+
-            '<li>Latitude: <b>'+country[i].lat+'</b></li>'+
-            '<li>Longitude: <b>'+country[i].lon+'</b></li>'+
+            '<li>Capital City: <b>'+country[i].capitalCity+'</b></li>'+
             '<li>Population: <b>'+country[i].popn+'</b></li>'+
             '<li> Currency: <b>'+country[i].currency+'</b></li>'+
             '<li>Language: <b>'+country[i].language+'</b></li>'+

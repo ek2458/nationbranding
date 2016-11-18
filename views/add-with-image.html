@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello World</title>
+    <title>Countries</title>
 
     <!-- Custom Font - Change 'Muli' to the font you want -->
     <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet' type='text/css'>
@@ -29,46 +29,66 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8">
-        <h1>Let's add an ITP Person</h1>
-        <form method="post" action="/api/create/image" id="myForm" enctype="multipart/form-data">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" placeholder="Name" name="name" required>
+        <h1>Let's add a Country</h1>
+        <form method="post" action="/api/create" id="myForm">
+          <div class="form-group col-md-4 col-sm-4">
+            <label for="country">Country</label>
+            <input type="text" class="form-control" id="country" placeholder="Country" name="country" required>
           </div>
-          <div class="form-group">
-            <label for="itpYear">ITP Year</label>
-            <input type="text" class="form-control" id="itpYear" placeholder="Year" name="itpYear" required>
+          <div class="form-group col-md-4 col-sm-4">
+            <label for="flag">Flag URL</label>
+            <input type="text" class="form-control" id="flag" placeholder="Flag URL" name="flag" required>
           </div>
-          <div class="form-group">
-            <label for="interests">Interests</label>
-            <input type="text" class="form-control" id="interests" name="interests" required>
-            <p class="help-block">Enter interests separated by comma</p>
+          <div class="form-group col-md-4 col-sm-4">
+            <label for="continent">Continent</label>
+            <input type="text" class="form-control" id="continent" placeholder="Continent" name="continent" required>
           </div>
-          <div class="form-group">
-            <label for="link">Link</label>
-            <input type="text" class="form-control" id="link" placeholder="Link" name="link" required>
-          </div>  
-          <div class="form-group">
+          <div class="form-group col-md-4 col-sm-4">
+            <label for="capitalCity">Capital City</label>
+            <input type="text" class="form-control" id="capitalCity" placeholder="Enter Capital City" name="capitalCity" required>
+          </div>
+          <div class="form-group col-md-4 col-sm-4">
+            <label for="popn">Population</label>
+            <input type="text" class="form-control" id="popn" placeholder="Population" name="popn" required>
+          </div>
+          <div class="form-group col-md-4 col-sm-4">
+            <label for="currency">Currency</label>
+            <input type="text" class="form-control" id="currency" placeholder="Currency" name="currency" required>
+          </div>
+          <div class="form-group col-md-4 col-sm-4">
+            <label for="language">language</label>
+            <input type="text" class="form-control" id="language" placeholder="language" name="language" required>
+          </div>
+          <div class="form-group col-md-4 col-sm-4">
+            <label for="coatOfArm">Coat of Arm</label>
+            <input type="text" class="form-control" id="coatOfArm" placeholder="Coat of Arm" name="coatOfArm" >
+          </div>
+          <div class="form-group col-md-4 col-sm-4">
+            <label for="animal">Symbolic Animal</label>
+            <input type="text" class="form-control" id="animal" placeholder="Symbolic Animal" name="animal" >
+          </div>
+          <div class="form-group col-md-4 col-sm-4">
+            <label for="plant">National Flower or Plant</label>
+            <input type="text" class="form-control" id="plant" placeholder="National Flower or Plant" name="plant" >
+          </div>
+          <!-- <div class="form-group">
             <label for="image">Image</label>
             <input type="file" name="image" id="image" value="Select a Photo">
+          </div> -->
+          <div class="form-group col-md-4 col-sm-4">
+            <label for="motto">Motto</label>
+            <input type="text" class="form-control" id="motto" placeholder="Motto" name="motto" >
           </div>
-          <label for="hasGlasses">Has Glasses?</label>
-          <div class="radio">
-            <label><input type="radio" name="hasGlasses" value="yes">Yes</label>
-          </div>
-          <div class="radio">
-            <label><input type="radio" name="hasGlasses" value="no">No</label>
-          </div>          
           <button type="submit" class="btn btn-default">Submit</button>
-        </form> 
+        </form>
       </div>
     </div>
   </div>
-  
+
 </body>
 
     <!-- JQuery script -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
     <!-- JQuery validate -->
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
@@ -77,14 +97,14 @@
       $("#myForm").validate({
           rules: {
             // compound rule
-            itpYear: {
-              required: true,
-              number: true
-            },
-            link: {
-              required: true,
+            flag: {
+              // required: true,
               url: true
-            }            
+            },
+            coatOfArm: {
+              // required: true,
+              url: true
+            }
           }
 
       });
